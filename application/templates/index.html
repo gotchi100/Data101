@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="site-header-logo">
+		<h1 class="text-left">
+			World Electricity and Renewable Energy
+		</h1>
+	</div>
+
+	<div class="row p-4">
+		<div data-aos="fade-right">
+			<di id = "chart1"></di>
+		</div>
+
+		<div>
+			<di id = "chart2"></di>
+		</div>
+
+		<!-- <div class="card m-auto" style="width: 90%" data-aos="fade-left">
+			<div class="card-body">
+				
+			</div>
+		</div> -->
+
+		<div class="card m-auto" style="width: 90%" data-aos="slide-up">
+			<div class="card-body">
+				<di id = "chart3"></di>
+			</div>
+		</div>
+	</div>
+
+	<!-- ployly CDN -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+        var graphs1 = {{ graph1JSON | safe}};
+        Plotly.plot("chart1", graphs1,{});
+
+        var graphs2 = {{ graph2JSON | safe}};
+        Plotly.plot("chart2", graphs2,{});
+
+        var graphs3 = {{ graph3JSON | safe}};
+        Plotly.plot("chart3", graphs3,{});
+    </script>
+{% endblock %}

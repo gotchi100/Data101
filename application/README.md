@@ -1,0 +1,1 @@
+pip install pandas flask plot plotly-express
