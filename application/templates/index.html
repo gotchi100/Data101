@@ -6,27 +6,28 @@
 		</h1>
 	</div>
 
-	<div class="row p-4">
-		<div data-aos="fade-right">
-			<di id = "chart1"></di>
-		</div>
-
-		<div>
-			<di id = "chart2"></di>
-		</div>
-
-		<!-- <div class="card m-auto" style="width: 90%" data-aos="fade-left">
-			<div class="card-body">
-				
+	<div class="row">
+		<div class="col-4">
+			<div>
+				<di id = "chart1"></di>
 			</div>
-		</div> -->
-
-		<div class="card m-auto" style="width: 90%" data-aos="slide-up">
-			<div class="card-body">
+			<div>
+				<di id = "chart2"></di>
+			</div>
+		</div>
+		<div class="col-5">
+			<div class="span10">
 				<di id = "chart3"></di>
 			</div>
+			<!-- <div class="w-100"> -->
+				<span id="sliderStatus" style="color:white"> 2000 </span>
+				<input type="range" min="2000" max="2014" value="2000" step="1" 
+					onChange="sliderChange(this.value)"/>
+			<!-- </div> -->
 		</div>
 	</div>
+
+
 
 	<!-- ployly CDN -->
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -39,5 +40,9 @@
 
         var graphs3 = {{ graph3JSON | safe}};
         Plotly.plot("chart3", graphs3,{});
+
+        function sliderChange(val){
+        	document.getElementById('sliderStatus').innerHTML = val;
+        }
     </script>
 {% endblock %}
