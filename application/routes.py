@@ -45,22 +45,22 @@ def index():
 	graph2JSON = json.dumps(fig2, cls = plotly.utils.PlotlyJSONEncoder)
 
 	# Graph three\
-	access_electricity_df = pd.DataFrame(pd.read_csv("data/Access_To_Electricity.csv"))
-	year = 'Y2000'
-	test_data3 = access_electricity_df.loc[:,['Country ','Code',year]]
+	# access_electricity_df = pd.DataFrame(pd.read_csv("data/Access_To_Electricity.csv"))
+	# year = 'Y2000'
+	# test_data3 = access_electricity_df.loc[:,['Country ','Code',year]]
 
-	choropleth_fig = go.Figure(data=go.Choropleth(locations=test_data3['Code'], 
-		z=test_data3[year],
-		text= test_data3['Country '],
-		colorscale=colorscale,
-		autocolorscale=False,
-		reversescale=False,
-		marker_line_color='#313131',
-		marker_line_width=0.5,
-		colorbar_title='Access (%)'))
-	choropleth_fig.update_layout(title_text = 'Population % with access to electricity',
-		geo=dict(showframe=False, showcastlines=False, projection_type='equirectangular'),
-		width=800, height=800)
+	# choropleth_fig = go.Figure(data=go.Choropleth(locations=test_data3['Code'], 
+	# 	z=test_data3[year],
+	# 	text= test_data3['Country '],
+	# 	colorscale=colorscale,
+	# 	autocolorscale=False,
+	# 	reversescale=False,
+	# 	marker_line_color='#313131',
+	# 	marker_line_width=0.5,
+	# 	colorbar_title='Access (%)'))
+	# choropleth_fig.update_layout(title_text = 'Population % with access to electricity',
+	# 	geo=dict(showframe=False, showcastlines=False, projection_type='equirectangular'),
+	# 	width=800, height=800)
 
 	df = px.data.medals_wide()
 	fig3 = px.bar(df, x="nation", y=['gold', 'silver', 'bronze'], title="Wide=FormInput")
