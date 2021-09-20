@@ -2,21 +2,22 @@ from application import app
 from flask import render_template, url_for
 import pandas as pd
 import json
-import pandas as pd
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
 
 @app.route("/")
 def index():
+	country = "North America"
+	year = '2014'
+
 	# blue colorscale for the maps
 	fig1_colors = ["#4e79a7","#f28e2b","#e15759",
 					"#76b7b2","#59a14f"]
 	# fig1_colors = ["Coal":"#4e79a7","Oil":"#f28e2b","Solar":"#e15759",
 	# 				"Hydro":"#76b7b2","Wind":"#59a14f"]
-	fig3_colors = ["#6baed6", "#57a0ce", "#4292c6", "#3082be", "#2171b5", "#1361a9", "#08519c", "#0b4083", "#08306b"]
-	country = "Costa Rica"
-	year = 'Y2014'
+	fig3_colors = ["#6baed6", "#57a0ce", "#4292c6", "#3082be", 
+	"#2171b5", "#1361a9", "#08519c", "#0b4083", "#08306b"]
 
 	#graph one
 	consumption_electricity_df = pd.DataFrame(pd.read_csv("data/Electricity_Consumption.csv"))
@@ -45,7 +46,8 @@ def index():
 	test_data2 = test_data2.drop(['Country', 'index'], axis=1)
 
 	fig2 = px.area(test_data2, x="Year", y=['Coal', 'Hydro', 'Solar', 'Oil', 'Wind'],
-		title="Electricity Production", width=350, height=270)	
+		title="Electricity Production",
+		labels={'value':'tWh'}, width=350, height=270)	
 	fig2.update_layout(
 		paper_bgcolor="black",
 		plot_bgcolor='black',
@@ -64,9 +66,10 @@ def index():
 		reversescale=False,
 		marker_line_color='#313131',
 		marker_line_width=0.5,
-		colorbar_title='Access (%)'))
-	choropleth_fig.update_layout(title_text = 'Population % with access to electricity',
-		geo=dict(showframe=False, showcoastlines=False, projection_type='equirectangular'),
+		colorbar_title='Access %'))
+	choropleth_fig.update_layout(title_text = 'Population Percentage with Access to Electricity',
+		geo=dict(subunitcolor='grey', bgcolor='black', lakecolor='black', showframe=False, showcoastlines=True, 
+			projection_type='equirectangular'),
 		width=800, height=520,
 		paper_bgcolor="black",
 		plot_bgcolor='black',
