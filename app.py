@@ -24,8 +24,6 @@ access_electricity_df = pd.DataFrame(pd.read_csv("data/Access_To_Electricity.csv
 
 app = dash.Dash(__name__)
 
-filtered_df = access_electricity_df.reindex(columns=['Country ','Code', '2014'])
-
 app.layout = html.Div([
     html.H1("World Electricity and Renewable Energy"),
     html.Div([
@@ -34,7 +32,7 @@ app.layout = html.Div([
     ],style={'display': 'inline-block', 'padding': '0 20'}),
     html.Div([
         dcc.Graph(id='Choropleth', figure={},
-        clickData={'points': [{'text': 'Japan'}]}),
+        clickData={'points': [{'text': 'Philippines'}]}),
         dcc.Slider(
         id='year-slider',
         min=2000,
@@ -43,7 +41,7 @@ app.layout = html.Div([
         step=1
         ),
         html.Pre(id='year')
-    ],style={'width': '49%', 'display': 'inline-block', 'padding': '0 20'}),
+    ],style={'width': '60%', 'display': 'inline-block', 'padding': '0 20'}),
 ])
 
 
@@ -62,7 +60,7 @@ def update_figure(selected_year):
         colorscale=fig3_colors,
         autocolorscale=False,
         reversescale=False,
-        marker_line_color='#313131',
+        marker_line_color='#FFFFFF',
         marker_line_width=0.5,
         colorbar_title='Access %'))
 
@@ -112,10 +110,18 @@ def display_click_data(clickData):
     country = clickData['points'][0]['text']
     country_data = consumption_electricity_df[consumption_electricity_df['Country'] 
     == country]
-    test_data = pd.Series(country_data.iloc[0,2:17], name='kWh').reset_index()
+    if(len(country_data) != 0):
+        test_data = pd.Series(country_data.iloc[0,2:17], name='kWh').reset_index()
+    else:
+        test_data = pd.Series(consumption_electricity_df.iloc[0,2:17], name='kWh').reset_index()
+        for col in test_data.columns:
+            test_data[col].values[:] = 0
 
     test_data2 = production[production['Country'] == country].reset_index()
     test_data2 = test_data2.drop(['Country', 'index'], axis=1)
+    if(len(test_data2) == 0):
+        for col in test_data2.columns:
+            test_data2[col].values[:] = 0
 
     return create_line(test_data), create_area(test_data2)
 
